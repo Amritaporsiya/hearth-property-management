@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: hearth-property-management
+    runtime: docker
+    plan: free
+    healthCheckPath: /login
+    envVars:
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /app/data/hearth.db
+      - key: GRACE_PERIOD_DAYS
+        value: 5
