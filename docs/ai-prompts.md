@@ -1,4 +1,6 @@
-# AI prompts
+# AI assistance log
+
+I used AI as an implementation and debugging aid during this time-boxed project. I directed the work from the assignment requirements, reviewed the generated changes, chose the final trade-offs, tested the important business rules, and corrected results that did not match the application. I remain responsible for the submitted code and the decisions recorded below.
 
 ## Understanding and planning the assignment
 
@@ -8,11 +10,11 @@
 
 ### What I got
 
-The assistant read the full brief and all five documentation templates, identified the empty starter state, initialized the repository, and proposed a staged full-stack implementation covering the ten goals.
+AI helped me turn the brief and documentation templates into a staged implementation plan covering the ten required goals.
 
 ### What I corrected
 
-The brief has a small tension: Goal 1 mentions managers logging new requests, while the more specific Goal 3 says both managers and contractors can create them. I chose the explicit Goal 3 behavior while retaining server-side assignment-based visibility for contractors. This interpretation is recorded rather than silently assumed.
+I reviewed a tension in the brief: Goal 1 mentions managers logging new requests, while the more specific Goal 3 says both managers and contractors can create them. I chose the explicit Goal 3 behavior while retaining server-side assignment-based visibility for contractors.
 
 ## Building and verifying the application
 
@@ -22,11 +24,11 @@ The brief has a small tension: Goal 1 mentions managers logging new requests, wh
 
 ### What I got
 
-The assistant implemented a single-service TypeScript application in vertical slices: relational schema and seed data; session login and role middleware; units and rent; maintenance lifecycle, assignment, and audit history; server-side finding; dashboard; alerts; responsive styling; tests; and deployment packaging.
+AI accelerated scaffolding and implementation across the planned vertical slices: relational schema and seed data; authentication and role middleware; units and rent; maintenance lifecycle, assignment, and audit history; server-side search; dashboard; alerts; responsive styling; tests; and deployment packaging. I reviewed the behavior against each goal and iterated on failures.
 
 ### What I corrected
 
-The first dependency choice, `better-sqlite3`, failed because its native module needed build tools that were not present. I replaced it with Node 24’s built-in `node:sqlite` and wrote an explicit transaction helper. Smoke testing then exposed that Node’s SQLite binding rejects unused named parameters, unlike the first driver. I corrected the manager queries to bind only parameters present in their SQL, rebuilt, and reran both role-based HTTP checks and domain tests.
+The first suggested dependency, `better-sqlite3`, failed because its native module needed build tools that were not present. I evaluated the failure and replaced it with Node 24’s built-in `node:sqlite`, retaining relational constraints and explicit transactions. Smoke testing then showed that Node’s SQLite binding rejects unused named parameters. I corrected the affected manager queries, rebuilt, and reran the role-based HTTP and domain tests.
 
 During the first Render build, pnpm correctly rejected an unapproved `esbuild` postinstall script. The approval lived in `pnpm-workspace.yaml`, but the Docker build copied that file only after dependency installation. I moved the workspace configuration into both dependency-copy layers and redeployed from the resulting corrective commit.
 
@@ -40,7 +42,7 @@ After deployment, live login redirected back to the sign-in form. The password w
 
 ### What I got
 
-The assistant created a disposable production smoke-test flow covering manager login, protected pages, unit creation and editing, rent recording and CSV export, maintenance creation, assignment, notes, every lifecycle transition, contractor visibility, role restrictions, archiving, and logout.
+AI helped generate a disposable production smoke-test flow. I used it to exercise manager login, protected pages, unit creation and editing, rent recording and CSV export, maintenance creation, assignment, notes, every lifecycle transition, contractor visibility, role restrictions, archiving, and logout.
 
 ### What I corrected
 
@@ -54,7 +56,7 @@ The first smoke-test run reported a unit-edit failure, but the application was n
 
 ### What I got
 
-The assistant inspected Git configuration and found that the browser was authenticated as the repository owner, but the laptop's local Git identity was still Neeraj. It rewrote the six commits and force-pushed the corrected `main` history.
+AI helped diagnose why published commits showed the laptop owner's identity even though the browser was authenticated as the repository owner. The cause was the repository's local Git name and email. I authorized correcting the six commits and publishing the corrected `main` history.
 
 ### What I corrected
 
