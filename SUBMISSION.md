@@ -47,7 +47,7 @@ Mark each honestly. Partial is fine — say what is partial.
 
 ## How much time did you actually spend?
 
-To be finalized after deployment and final QA.
+Approximately 12 hours, including planning, implementation, automated testing, documentation, deployment, and production verification.
 
 ## What would you do next, with another 12 hours?
 

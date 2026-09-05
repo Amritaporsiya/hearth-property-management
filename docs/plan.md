@@ -1,6 +1,6 @@
 # Plan
 
-I split the work into six focused sessions so that each one leaves a working, reviewable increment.
+I split the work into six focused sessions so that each one left a working, reviewable increment.
 
 | Session | Estimate | Purpose |
 |---|---:|---|
@@ -13,4 +13,6 @@ I split the work into six focused sessions so that each one leaves a working, re
 
 I am building risky server-side rules before visual polish. Authentication and the data model come first because every later feature relies on their boundaries. Maintenance and rent are separate vertical slices; the dashboard then consumes already-proven queries rather than inventing a second interpretation of the data.
 
-The initial total estimate is 12 hours. Actual time and any scope changes will be recorded here after each session. Stretch goals are deliberately excluded until all ten required goals are solid. If time runs short, I will reduce decorative UI work and dashboard animation—not authorization, auditability, validation, or required reporting.
+The initial total estimate was 12 hours, and the work finished at approximately 12 hours including deployment and live QA. Foundation and maintenance took slightly longer than expected because the original SQLite package required unavailable native build tools. Rent and dashboard work finished faster because they reused the established schema and server-rendering patterns. Deployment also needed an additional secure-cookie fix for Render's reverse proxy.
+
+I cut all stretch goals: tenant self-service, file attachments, lease reminders, ratings, recurring maintenance, multiple owners, late-fee automation, utilities, and inspections. I also kept the chart CSS-based instead of adding a charting dependency. I did not cut authorization, lifecycle enforcement, immutable history, validation, required reporting, or production verification.

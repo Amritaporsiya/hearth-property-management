@@ -31,3 +31,31 @@ The first dependency choice, `better-sqlite3`, failed because its native module 
 During the first Render build, pnpm correctly rejected an unapproved `esbuild` postinstall script. The approval lived in `pnpm-workspace.yaml`, but the Docker build copied that file only after dependency installation. I moved the workspace configuration into both dependency-copy layers and redeployed from the resulting corrective commit.
 
 After deployment, live login redirected back to the sign-in form. The password was valid, but the production session used a secure cookie while Express did not trust Render's HTTPS reverse proxy, so the cookie was never issued. I enabled one trusted proxy hop only in production and added a session-retention integration test before redeploying.
+
+## Production verification and submission preparation
+
+### Prompt
+
+“Test everything from deployed link and check if everything working or not.”
+
+### What I got
+
+The assistant created a disposable production smoke-test flow covering manager login, protected pages, unit creation and editing, rent recording and CSV export, maintenance creation, assignment, notes, every lifecycle transition, contractor visibility, role restrictions, archiving, and logout.
+
+### What I corrected
+
+The first smoke-test run reported a unit-edit failure, but the application was not the cause. The test's broad HTML regular expression selected the ID from the previous unit card. I narrowed the parser to one complete card and reran it. A second assertion expected the contractor list to display “Request #ID,” while the actual list intentionally displays the description and links to the ID. I corrected the assertion to verify the request link. The final production run passed all 52 checks, and disposable units were archived.
+
+## Correcting Git attribution
+
+### Prompt
+
+“Correct it, remove my commits and make all commits her.”
+
+### What I got
+
+The assistant inspected Git configuration and found that the browser was authenticated as the repository owner, but the laptop's local Git identity was still Neeraj. It rewrote the six commits and force-pushed the corrected `main` history.
+
+### What I corrected
+
+Because the owner's public profile did not expose a name or email, I used GitHub's verified private-email form, `85431408+Amritaporsiya@users.noreply.github.com`. I then verified through GitHub's API that every published commit links to the `Amritaporsiya` account and configured this repository to use that identity for future commits.
