@@ -27,3 +27,5 @@ The assistant implemented a single-service TypeScript application in vertical sl
 ### What I corrected
 
 The first dependency choice, `better-sqlite3`, failed because its native module needed build tools that were not present. I replaced it with Node 24’s built-in `node:sqlite` and wrote an explicit transaction helper. Smoke testing then exposed that Node’s SQLite binding rejects unused named parameters, unlike the first driver. I corrected the manager queries to bind only parameters present in their SQL, rebuilt, and reran both role-based HTTP checks and domain tests.
+
+During the first Render build, pnpm correctly rejected an unapproved `esbuild` postinstall script. The approval lived in `pnpm-workspace.yaml`, but the Docker build copied that file only after dependency installation. I moved the workspace configuration into both dependency-copy layers and redeployed from the resulting corrective commit.
