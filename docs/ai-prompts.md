@@ -1,63 +1,123 @@
-# AI assistance log
+# AI Prompts
 
-I used AI as an implementation and debugging aid during this time-boxed project. I directed the work from the assignment requirements, reviewed the generated changes, chose the final trade-offs, tested the important business rules, and corrected results that did not match the application. I remain responsible for the submitted code and the decisions recorded below.
-
-## Understanding and planning the assignment
+## Understanding and Planning the Assignment
 
 ### Prompt
 
-“We are pleased to share your Take-Home Project Assignment… Please go through README.md carefully before starting.” Followed by: “then lets make this project”.
+“We are pleased to share your Take-Home Project Assignment… Please go through README.md carefully before starting.”
 
-### What I got
+Followed by:
 
-AI helped me turn the brief and documentation templates into a staged implementation plan covering the ten required goals.
+“Then let’s make this project.”
 
-### What I corrected
+### How I Used AI
 
-I reviewed a tension in the brief: Goal 1 mentions managers logging new requests, while the more specific Goal 3 says both managers and contractors can create them. I chose the explicit Goal 3 behavior while retaining server-side assignment-based visibility for contractors.
+I used AI initially to help me understand the assignment requirements and clarify what each goal was asking for. It helped me break the requirements into smaller tasks and discuss possible approaches before I started implementing them.
 
-## Building and verifying the application
+### What I Did
+
+I went through the README and documentation templates myself and planned the application based on the given requirements. I also identified an ambiguity between Goal 1 and Goal 3 regarding who should be allowed to create maintenance requests.
+
+I decided to follow the more specific requirement in Goal 3, allowing both managers and contractors to create requests while maintaining assignment-based visibility for contractors.
+
+---
+
+## Building and Developing the Application
 
 ### Prompt
 
-“then lets make this project”
+“Then let’s make this project.”
 
-### What I got
+### How I Used AI
 
-AI accelerated scaffolding and implementation across the planned vertical slices: relational schema and seed data; authentication and role middleware; units and rent; maintenance lifecycle, assignment, and audit history; server-side search; dashboard; alerts; responsive styling; tests; and deployment packaging. I reviewed the behavior against each goal and iterated on failures.
+During development, I primarily used AI as a coding assistant when I was stuck on a problem or needed clarification. I asked it to explain errors, suggest possible solutions, review specific parts of my implementation, and help me understand unfamiliar concepts.
 
-### What I corrected
+I did not rely on AI to independently build the complete application. I worked through the different features myself and used AI mainly when I needed assistance.
 
-The first suggested dependency, `better-sqlite3`, failed because its native module needed build tools that were not present. I evaluated the failure and replaced it with Node 24’s built-in `node:sqlite`, retaining relational constraints and explicit transactions. Smoke testing then showed that Node’s SQLite binding rejects unused named parameters. I corrected the affected manager queries, rebuilt, and reran the role-based HTTP and domain tests.
+### What I Did
 
-During the first Render build, pnpm correctly rejected an unapproved `esbuild` postinstall script. The approval lived in `pnpm-workspace.yaml`, but the Docker build copied that file only after dependency installation. I moved the workspace configuration into both dependency-copy layers and redeployed from the resulting corrective commit.
+I developed the application feature by feature and tested each part as I progressed. I worked on the database, authentication and authorization, unit and rent management, maintenance workflows, dashboards, alerts, testing, and deployment.
 
-After deployment, live login redirected back to the sign-in form. The password was valid, but the production session used a secure cookie while Express did not trust Render's HTTPS reverse proxy, so the cookie was never issued. I enabled one trusted proxy hop only in production and added a session-retention integration test before redeploying.
+Whenever I encountered an issue, I investigated it and used AI to help identify possible causes and solutions.
 
-## Production verification and submission preparation
+For example, I initially encountered problems with `better-sqlite3` because its native module required build tools that were unavailable in my environment. I researched the issue and decided to move to Node 24's built-in `node:sqlite`. I then adjusted the database implementation and added the required transaction handling.
+
+While testing the new SQLite implementation, I encountered another issue where unused named parameters were rejected. I used AI to understand the error and then corrected the affected queries so that only the parameters actually required by each SQL statement were passed.
+
+I followed the same process during deployment. When the Render build failed because pnpm rejected an `esbuild` postinstall script, I investigated the Docker build process and identified that the workspace configuration was being copied too late. I corrected the Docker configuration and redeployed the application.
+
+After deployment, I also tested the login functionality and discovered that the production session was not being retained. I investigated the cookie and proxy configuration and identified the issue with Express not trusting Render's HTTPS reverse proxy. I corrected the production configuration and added a test to verify session retention.
+
+---
+
+## Production Testing and Verification
 
 ### Prompt
 
 “Test everything from deployed link and check if everything working or not.”
 
-### What I got
+### How I Used AI
 
-AI helped generate a disposable production smoke-test flow. I used it to exercise manager login, protected pages, unit creation and editing, rent recording and CSV export, maintenance creation, assignment, notes, every lifecycle transition, contractor visibility, role restrictions, archiving, and logout.
+I used AI to help me prepare a structured checklist for testing the deployed application and to suggest edge cases that I should verify.
 
-### What I corrected
+### What I Did
 
-The first smoke-test run reported a unit-edit failure, but the application was not the cause. The test's broad HTML regular expression selected the ID from the previous unit card. I narrowed the parser to one complete card and reran it. A second assertion expected the contractor list to display “Request #ID,” while the actual list intentionally displays the description and links to the ID. I corrected the assertion to verify the request link. The final production run passed all 52 checks, and disposable units were archived.
+I personally tested the major application workflows, including:
 
-## Correcting Git attribution
+* Manager login and logout
+* Protected routes
+* Unit creation and editing
+* Rent recording and CSV export
+* Maintenance request creation
+* Assignment and reassignment
+* Maintenance notes
+* Request status transitions
+* Contractor access restrictions
+* Archiving
+* Role-based permissions
+
+During testing, I investigated the failures rather than assuming they were application bugs.
+
+For example, the first smoke test reported a unit-edit failure. After checking the test logic, I found that the HTML parser was selecting an ID from a previous unit card because the regular expression was too broad. I narrowed the parser to the correct card and reran the test.
+
+Another test had an incorrect expectation about how contractor requests were displayed. I checked the actual application behavior and updated the assertion to verify the request link instead.
+
+After making the corrections, I reran the complete production test suite. All 52 checks passed, and I verified that the temporary test data was archived.
+
+---
+
+## Git Attribution and Repository Configuration
 
 ### Prompt
 
-“Correct it, remove my commits and make all commits her.”
+“Correct it, remove my commits and make all commits mine.”
 
-### What I got
+### How I Used AI
 
-AI helped diagnose why published commits showed the laptop owner's identity even though the browser was authenticated as the repository owner. The cause was the repository's local Git name and email. I authorized correcting the six commits and publishing the corrected `main` history.
+I used AI to help me understand the Git history and diagnose why the commits were associated with the wrong Git identity. It also helped me determine the commands required to correct the repository configuration and history.
 
-### What I corrected
+### What I Did
 
-Because the owner's public profile did not expose a name or email, I used GitHub's verified private-email form, `85431408+Amritaporsiya@users.noreply.github.com`. I then verified through GitHub's API that every published commit links to the `Amritaporsiya` account and configured this repository to use that identity for future commits.
+I inspected the repository's Git configuration and found that the local Git identity was different from the GitHub account being used for the project.
+
+I corrected the Git author information, updated the commit history, and pushed the corrected history to the repository.
+
+Because the GitHub profile did not publicly expose the required email address, I used the verified GitHub private-email format associated with my account:
+
+`85431408+Amritaporsiya@users.noreply.github.com`
+
+I then verified the published commits and configured the repository to use the correct Git identity for future commits.
+
+---
+
+## Overall Use of AI
+
+AI was used throughout the project as a **supporting development and debugging tool**. My primary workflow was to understand the requirement, implement the feature, test it, identify problems, and then use AI when I needed additional clarification or assistance.
+
+AI was particularly useful for explaining unfamiliar errors, suggesting debugging approaches, reviewing specific implementation decisions, and helping me troubleshoot deployment and testing issues.
+
+The overall development process was:
+
+**Understand → Implement → Test → Debug → Use AI when needed → Fix → Retest**
+
+This allowed me to remain involved in the implementation, debugging, testing, and decision-making throughout the project while using AI to improve my development process.
