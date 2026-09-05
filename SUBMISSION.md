@@ -4,12 +4,12 @@ Fill this in and commit it. This is the first file we open.
 
 ## Links
 
-- **GitHub repository:** <public repo URL>
-- **Live application:** <deployed URL>
+- **GitHub repository:** https://github.com/Amritaporsiya/hearth-property-management
+- **Live application:** https://hearth-property-management.onrender.com
 
 ## Notes for the reviewer
 
-The repository includes seeded data and can be run locally with `pnpm install && pnpm dev`. Deployment links will be added after the repository is published. A free container host may sleep when idle; allow up to a minute for its first response.
+The repository includes seeded data and can be run locally with `pnpm install && pnpm dev`. The live application uses Render's free service, which sleeps when idle; allow up to a minute for its first response. Its SQLite filesystem is ephemeral, so service replacement may restore the original seeded demo data.
 
 ## Demo credentials
 
@@ -26,7 +26,7 @@ The repository includes seeded data and can be run locally with `pnpm install &&
 | Frontend | Server-rendered semantic HTML and custom responsive CSS | Fast, accessible workflows without SPA state duplication |
 | Backend | Node.js 24, TypeScript, Express, Zod | One deployable service with server-side authorization and validation |
 | Database | SQLite through Node's built-in driver | Relational constraints with zero external setup for the demo |
-| Hosting | Docker-ready; final host pending | Reproducible build with secrets supplied as environment variables |
+| Hosting | Docker on Render's free web-service tier | Reproducible build with secrets supplied as environment variables |
 
 ## Goal checklist
 
